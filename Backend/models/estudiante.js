@@ -22,6 +22,16 @@ const EstudianteSchema = Schema({
     ref: 'Curso',
     required: true
   },*/
+  rol:{
+    type: String,
+    //required: true,
+    enum: ['DOCENTE', 'ESTUDIANTE']
+  },
+  estado:{
+    type: Boolean,
+    default: true
+}
+
 });
 
 module.exports = model("Estudiante", EstudianteSchema);

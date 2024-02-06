@@ -10,12 +10,9 @@ const CursoSchema = Schema({
         type: Number,
         required: [true, 'La duracion del curso es requerida']
     },
-    docente:{
-        
-    },
-    estudiante:{
-        type: Schema.Types.ObjectId,
-        ref: 'Estudiante',
+    estado:{
+        type: Boolean,
+        default: true
     }
 })
 
