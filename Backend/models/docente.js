@@ -13,14 +13,18 @@ const DocenteSchema = Schema({
         type: Number,
         required: [true, "El documento de identidad es requerido"],
       },
-      curso: {
+      /*curso: {
         type: Schema.Types.ObjectId,
         ref: 'Curso',
-      },
+      },*/
       rol:{
         type: String,
         required: true,
         enum: ['DOCENTE', 'ESTUDIANTE']
+      },
+      estado:{
+        type: Boolean,
+        default: true
       }
 })
 
