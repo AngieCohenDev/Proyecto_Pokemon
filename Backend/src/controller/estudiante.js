@@ -1,6 +1,5 @@
 const { request, response } = require("express");
-const bcryptjs = require('bcryptjs');
-
+const bcryptjs = require("bcryptjs");
 
 const Estudiante = require("../models/estudiante");
 
@@ -20,7 +19,8 @@ const estudianteGet = async (req = request, res = response) => {
 };
 
 const estudiantePost = async (req = request, res = response) => {
-  const { nombre, apellido, password, edad, documento_id, rol, cursos } = req.body;
+  const { nombre, apellido, password, edad, documento_id, rol, cursos } =
+    req.body;
   const estudiante = new Estudiante({
     nombre,
     apellido,
@@ -28,16 +28,15 @@ const estudiantePost = async (req = request, res = response) => {
     edad,
     documento_id,
     rol,
-    cursos
+    cursos,
   });
 
-  
   // Encriptar passwordo
-    // Generar la sal (salt)
-    const salt = bcryptjs.genSaltSync(10); // 10 es el número de iteraciones
+  // Generar la sal (salt)
+  const salt = bcryptjs.genSaltSync(10); // 10 es el número de iteraciones
 
-    // Encriptar la contraseña usando la sal
-    estudiante.password = bcryptjs.hashSync(password, salt);
+  // Encriptar la contraseña usando la sal
+  estudiante.password = bcryptjs.hashSync(password, salt);
 
   //Guardar en base de datos
   await estudiante.save();
@@ -54,8 +53,12 @@ const estudiantePut = async (req = request, res = response) => {
 };
 
 const estudianteDelete = async (req = request, res = response) => {
+  const { id } = req.params;
+
+  const estudiante = await Estudiante.findByIdAndUpdate(id, { estado: false });
+
   res.json({
-    msg: "Delete estudiante si funciona",
+    estudiante,
   });
 };
 

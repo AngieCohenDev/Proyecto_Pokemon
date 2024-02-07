@@ -25,7 +25,8 @@ router.post(
     check("edad", "La edad es obligatoria").not().isEmpty(),
     check("documento_id", "El docuemento no es valido")
       .not()
-      .isEmpty().custom(ifExisteDID),
+      .isEmpty()
+      .custom(ifExisteDID),
     check("rol", "El rol es requerido").not().isEmpty(),
     ValidarCampos,
   ],
@@ -34,6 +35,10 @@ router.post(
 
 router.put("/", estudiantePut);
 
-router.delete("/", estudianteDelete);
+router.delete(
+  "/:id",
+  [check("id", "No es un ID valido").isMongoId(), ValidarCampos],
+  estudianteDelete
+);
 
 module.exports = router;
