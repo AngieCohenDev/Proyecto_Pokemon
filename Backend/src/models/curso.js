@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const Docente = require("./docente");
 
 const CursoSchema = Schema({
   nombre: {

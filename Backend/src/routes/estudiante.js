@@ -7,6 +7,7 @@ const {
   estudianteDelete,
 } = require("../controller/estudiante");
 const { ValidarCampos } = require("../middlewares");
+const { ifExisteDID } = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -17,10 +18,14 @@ router.post(
   [
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
     check("apellido", "El apellido es obligatorio").not().isEmpty(),
+    check(
+      "password",
+      "La contraseña tiene que tener mas de 6 caracteres"
+    ).isLength({ min: 6 }),
     check("edad", "La edad es obligatoria").not().isEmpty(),
-    check("documento_id", "El documento de identidad obligatorio")
+    check("documento_id", "El docuemento no es valido")
       .not()
-      .isEmpty(),
+      .isEmpty().custom(ifExisteDID),
     check("rol", "El rol es requerido").not().isEmpty(),
     ValidarCampos,
   ],

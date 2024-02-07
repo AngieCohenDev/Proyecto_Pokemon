@@ -18,6 +18,7 @@ router.post(
   [
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
     check("apellido", "El apellido es obligatorio").not().isEmpty(),
+    check('password', "La contraseña debe de ser de mas de 6 caractares").isLength({min:6}),
     check("edad", "La edad es obligatoria").not().isEmpty(),
     check("documento_id", "El documento de identidad obligatorio").not().isEmpty(),
     check("rol", "El rol es requerido").not().isEmpty(),

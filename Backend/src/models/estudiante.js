@@ -9,6 +9,10 @@ const EstudianteSchema = Schema({
     type: String,
     required: [true, "El apellido es requerido"],
   },
+  password: {
+    type: String,
+    required: [true, "La contraseña es obligatoria"],
+  },
   edad: {
     type: Number,
     required: [true, "La edad es requerida"],
@@ -16,22 +20,23 @@ const EstudianteSchema = Schema({
   documento_id: {
     type: Number,
     required: [true, "El documento de identidad es requerido"],
+    unique: true,
   },
-  /*curso: {
-    type: Schema.Types.ObjectId,
-    ref: 'Curso',
-    required: true
-  },*/
-  rol:{
+  cursos: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Curso",
+    },
+  ],
+  rol: {
     type: String,
-    //required: true,
-    enum: ['DOCENTE', 'ESTUDIANTE']
+    required: true,
+    enum: ["DOCENTE", "ESTUDIANTE"],
   },
-  estado:{
+  estado: {
     type: Boolean,
-    default: true
-}
-
+    default: true,
+  },
 });
 
 module.exports = model("Estudiante", EstudianteSchema);

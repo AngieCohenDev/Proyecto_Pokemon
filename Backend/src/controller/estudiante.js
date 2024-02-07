@@ -1,5 +1,6 @@
 const { request, response } = require("express");
-const bcryptjs = require("bcryptjs");
+const bcryptjs = require('bcryptjs');
+
 
 const Estudiante = require("../models/estudiante");
 
@@ -19,15 +20,31 @@ const estudianteGet = async (req = request, res = response) => {
 };
 
 const estudiantePost = async (req = request, res = response) => {
-  const { nombre, apellido, edad, documento_id } = req.body;
-  const estudiante = new Estudiante({ nombre, apellido, edad, documento_id });
+  const { nombre, apellido, password, edad, documento_id, rol, cursos } = req.body;
+  const estudiante = new Estudiante({
+    nombre,
+    apellido,
+    password,
+    edad,
+    documento_id,
+    rol,
+    cursos
+  });
+
+  
+  // Encriptar passwordo
+    // Generar la sal (salt)
+    const salt = bcryptjs.genSaltSync(10); // 10 es el número de iteraciones
+
+    // Encriptar la contraseña usando la sal
+    estudiante.password = bcryptjs.hashSync(password, salt);
 
   //Guardar en base de datos
   await estudiante.save();
 
   res.json({
-    estudiante
-  })
+    estudiante,
+  });
 };
 
 const estudiantePut = async (req = request, res = response) => {
