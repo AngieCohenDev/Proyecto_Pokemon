@@ -17,6 +17,7 @@ router.post(
   [
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
     check("duracion", "La duracion es obligatoria").not().isEmpty(),
+    check("docente", "El docente es requerido").not().isEmpty(),
     ValidarCampos
   ],
   cursoPost

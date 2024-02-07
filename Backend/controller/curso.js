@@ -18,8 +18,8 @@ const cursoGet = async (req = response, res = response) => {
 };
 
 const cursoPost = async (req = response, res = response) => {
-  const { nombre, duracion } = req.body;
-  const curso = new Curso({ nombre, duracion });
+  const { nombre, duracion, docente } = req.body;
+  const curso = new Curso({ nombre, duracion, docente });
 
   //Guardar en base de datos
   await curso.save();

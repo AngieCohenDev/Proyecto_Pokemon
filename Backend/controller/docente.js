@@ -18,8 +18,8 @@ const docenteGet = async (req = request, res = response) => {
 };
 
 const docentePost = async (req = request, res = response) => {
-  const { nombre, apellido, documento_id, rol } = req.body;
-  const docente = new Docente({ nombre, apellido, documento_id, rol });
+  const { nombre, apellido, documento_id, curso, rol } = req.body;
+  const docente = new Docente({ nombre, apellido, documento_id, curso, rol });
 
   // Guardar en base de Datos
   await docente.save();
