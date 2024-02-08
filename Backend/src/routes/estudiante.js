@@ -7,7 +7,10 @@ const {
   estudianteDelete,
 } = require("../controller/estudiante");
 const { ValidarCampos } = require("../middlewares");
-const { ifExisteDID } = require("../helpers/db-validators");
+const {
+  ifExisteDID,
+  existeEstudianteById,
+} = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -23,7 +26,7 @@ router.post(
       "La contraseña tiene que tener mas de 6 caracteres"
     ).isLength({ min: 6 }),
     check("edad", "La edad es obligatoria").not().isEmpty(),
-    check("documento_id", "El docuemento no es valido")
+    check("documento_id", "El docuemento es requerido")
       .not()
       .isEmpty()
       .custom(ifExisteDID),
@@ -33,7 +36,15 @@ router.post(
   estudiantePost
 );
 
-router.put("/", estudiantePut);
+router.put(
+  "/:id",
+  [
+    check("id", "No es un ID valido").isMongoId(),
+    check("id").custom(existeEstudianteById),
+    ValidarCampos,
+  ],
+  estudiantePut
+);
 
 router.delete(
   "/:id",

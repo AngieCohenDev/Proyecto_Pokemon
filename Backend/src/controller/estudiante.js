@@ -47,8 +47,20 @@ const estudiantePost = async (req = request, res = response) => {
 };
 
 const estudiantePut = async (req = request, res = response) => {
+  const { id } = req.params;
+  const { _id, password, ...resto } = req.body;
+
+  if (password) {
+    const salt = bcryptjs.genSaltSync();
+    resto.password = bcryptjs.hashSync(password, salt);
+  }
+
+  const estudiante = await Estudiante.findByIdAndUpdate(id, resto, {
+    new: true,
+  });
+
   res.json({
-    msg: "Put estudiante si funciona",
+    estudiante,
   });
 };
 

@@ -7,6 +7,13 @@ const ifExisteDID = async (documento_id) => {
   }
 };
 
+const existeEstudianteById = async(id) => {
+  const existeEstudiante = await Estudiante.findById(id)
+  if(!existeEstudiante){
+    throw new Error(`El id: ${id} no existe`)  }
+}
+
 module.exports = {
   ifExisteDID,
+  existeEstudianteById
 };
