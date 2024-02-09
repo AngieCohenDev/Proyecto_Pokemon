@@ -6,7 +6,8 @@ const {
   cursoPut,
   cursoDelete,
 } = require("../controller/curso");
-const { ValidarCampos } = require("../middlewares");
+const { ValidarCampos, adminRol, } = require("../middlewares");
+const { existeCursoById } = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -23,7 +24,12 @@ router.post(
   cursoPost
 );
 
-router.put("/", cursoPut);
+router.put("/:id",[
+  check('id', 'No es un ID valido').isMongoId(),
+  check('id').custom(existeCursoById),
+  check('rol').custom(adminRol),
+  ValidarCampos
+], cursoPut);
 router.delete("/", cursoDelete);
 
 module.exports = router;

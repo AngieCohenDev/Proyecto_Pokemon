@@ -29,9 +29,14 @@ const cursoPost = async (req = response, res = response) => {
   });
 };
 
-const cursoPut = (req = response, res = response) => {
+const cursoPut = async(req = response, res = response) => {
+  const {id} = req.params;
+  const {_id, nombre, ...resto} = req.body;
+
+  const curso = await Curso.findByIdAndUpdate(id, resto, {new: true});
+  
   res.json({
-    msg: "Put de cursos funciona",
+    curso
   });
 };
 
