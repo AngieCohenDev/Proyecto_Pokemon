@@ -25,11 +25,15 @@ router.post(
       "password",
       "La contraseña tiene que tener mas de 6 caracteres"
     ).isLength({ min: 6 }),
-    check("edad", "La edad es obligatoria").not().isEmpty(),
-    check("documento_id", "El docuemento es requerido")
+    check("edad", "La edad es obligatoria")
       .not()
       .isEmpty()
-      .custom(ifExisteDID),
+      .isInt({ min: 15, max: 99 }).withMessage('Edad no permitida'),
+    check("documento_id", "El documento es requerido")
+      .not()
+      .isEmpty()
+      .custom(ifExisteDID)
+      .isLength({ min: 10, max: 10 }).withMessage('El documento debe de tener 10 numeros'),
     check("rol", "El rol es requerido").not().isEmpty(),
     ValidarCampos,
   ],
