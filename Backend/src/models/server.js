@@ -15,6 +15,7 @@ class Server {
       estudiantes: "/estudiantes",
       cursos: "/cursos",
       docente: "/docentes",
+      auth: "/auth",
     };
 
     // Conectar a la base de datos
@@ -43,6 +44,7 @@ class Server {
     this.app.use(this.paths.estudiantes, require("../routes/estudiante"));
     this.app.use(this.paths.cursos, require("../routes/curso"));
     this.app.use(this.paths.docente, require("../routes/docente"));
+    this.app.use(this.paths.auth, require("../routes/auth"));
   }
 
   listen() {

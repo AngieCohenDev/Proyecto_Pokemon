@@ -18,10 +18,10 @@ router.post(
   [
     check("nombre", "El nombre es obligatorio").not().isEmpty(),
     check("apellido", "El apellido es obligatorio").not().isEmpty(),
-    check(
-      "password",
-      "La contraseña debe de ser de mas de 6 caractares"
-    ).isLength({ min: 6 }),
+    check("password", "La contraseña debe de ser de mas de 6 caractares")
+      .not()
+      .isEmpty()
+      .isLength({ min: 6 }),
     check("edad", "La edad es obligatoria")
       .not()
       .isEmpty()
