@@ -38,7 +38,7 @@ router.post(
   docentePost
 );
 
-router.put("/", docentePut);
+router.put("/:id", docentePut);
 router.delete("/", docenteDelete);
 
 module.exports = router;

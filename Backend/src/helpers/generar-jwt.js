@@ -1,9 +1,9 @@
 const jwt = require("jsonwebtoken");
 const Docente = require('../models/docente');
 
-const generarJWT = (uid = "") => {
+const generarJWT = (iud = "") => {
   return new Promise((resolve, reject) => {
-    const payload = { uid };
+    const payload = { iud };
 
     jwt.sign(
       payload,
@@ -30,8 +30,8 @@ const comprobarJWT = async(token = '') =>{
         return null;
       }
   
-      const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
-      const docente = await Docente.findById(uid);
+      const { iud } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+      const docente = await Docente.findById(iud);
   
       if(docente){
           if(docente.estado){

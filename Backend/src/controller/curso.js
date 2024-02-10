@@ -40,9 +40,14 @@ const cursoPut = async(req = response, res = response) => {
   });
 };
 
-const cursoDelete = (req = response, res = response) => {
+const cursoDelete = async(req = response, res = response) => {
+  
+  const {id} = req.params;
+
+  curso = await Curso.findByIdAndUpdate(id, {estado: false})
+  
   res.json({
-    msg: "Delete de cursos funciona",
+    curso
   });
 };
 
