@@ -6,7 +6,7 @@ const {
   estudiantePut,
   estudianteDelete,
 } = require("../controller/estudiante");
-const { ValidarCampos } = require("../middlewares");
+const { ValidarCampos, validarJWT } = require("../middlewares");
 const {
   ifExisteDID,
   existeEstudianteById,
@@ -28,12 +28,14 @@ router.post(
     check("edad", "La edad es obligatoria")
       .not()
       .isEmpty()
-      .isInt({ min: 15, max: 99 }).withMessage('Edad no permitida'),
+      .isInt({ min: 15, max: 99 })
+      .withMessage("Edad no permitida"),
     check("documento_id", "El documento es requerido")
       .not()
       .isEmpty()
       .custom(ifExisteDID)
-      .isLength({ min: 10, max: 10 }).withMessage('El documento debe de tener 10 numeros'),
+      .isLength({ min: 10, max: 10 })
+      .withMessage("El documento debe de tener 10 numeros"),
     check("rol", "El rol es requerido").not().isEmpty(),
     ValidarCampos,
   ],
@@ -43,6 +45,7 @@ router.post(
 router.put(
   "/:id",
   [
+    validarJWT,
     check("id", "No es un ID valido").isMongoId(),
     check("id").custom(existeEstudianteById),
     ValidarCampos,
@@ -52,7 +55,12 @@ router.put(
 
 router.delete(
   "/:id",
-  [check("id", "No es un ID valido").isMongoId(), ValidarCampos],
+  [
+    validarJWT,
+    check("id", "No es un ID valido").isMongoId(),
+    check("id").custom(existeEstudianteById),
+    ValidarCampos,
+  ],
   estudianteDelete
 );
 
