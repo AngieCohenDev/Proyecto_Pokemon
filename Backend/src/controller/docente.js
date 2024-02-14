@@ -44,9 +44,19 @@ const docentePost = async (req = request, res = response) => {
   });
 };
 
-const docentePut = (req = request, res = response) => {
+const docentePut = async (req = request, res = response) => {
+  const { id } = req.params;
+  const { _id, documento_id, rol, password, ...resto } = req.body;
+
+  if (password) {
+    const salt = bcryptjs.genSaltSync();
+    resto.password = bcryptjs.hashSync(password, salt);
+  }
+
+  const docente = await Docente.findByIdAndUpdate(id, resto, { new: true });
+
   res.json({
-    msg: "put API - controlador",
+    docente,
   });
 };
 

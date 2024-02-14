@@ -39,7 +39,16 @@ router.post(
   docentePost
 );
 
-router.put("/:id", docentePut);
+router.put(
+  "/:id",
+  [
+    validarJWT,
+    check("id", "No es un ID valido").isMongoId(),
+    check("id").custom(existeDocenteById), 
+    ValidarCampos,
+  ],
+  docentePut
+);
 router.delete(
   "/:id",
   [
