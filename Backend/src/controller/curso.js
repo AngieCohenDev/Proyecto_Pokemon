@@ -1,8 +1,8 @@
-const { response } = require("express");
+const { response, request } = require("express");
 
 const Curso = require("../models/curso");
 
-const cursoGet = async (req = response, res = response) => {
+const cursosGet = async (req = response, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
   const query = { estado: true };
 
@@ -16,6 +16,13 @@ const cursoGet = async (req = response, res = response) => {
     curso,
   });
 };
+
+const cursoGet = async (req = request, res = response) => {
+  const {id} = req.params;
+  const curso = await Curso.findById(id).populate('docente', ['nombre', 'apellido']);
+
+  res.json(curso);
+}
 
 const cursoPost = async (req = response, res = response) => {
   const { nombre, duracion, docente } = req.body;
@@ -53,6 +60,7 @@ const cursoDelete = async(req = response, res = response) => {
 
 module.exports = {
   cursoGet,
+  cursosGet,
   cursoPost,
   cursoPut,
   cursoDelete,

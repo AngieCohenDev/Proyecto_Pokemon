@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 const {
-  cursoGet,
+  cursosGet,
   cursoPost,
   cursoPut,
   cursoDelete,
+  cursoGet,
 } = require("../controller/curso");
 const { ValidarCampos, adminRol } = require("../middlewares");
 const { existeCursoById } = require("../helpers/db-validators");
@@ -12,7 +13,17 @@ const { validarJWT } = require("../middlewares/validar-jwt");
 
 const router = Router();
 
-router.get("/", cursoGet);
+router.get("/", cursosGet);
+
+router.get(
+  "/:id",
+  [
+    check("id", "No es un ID valido").isMongoId(),
+    check("id").custom(existeCursoById),
+    ValidarCampos,
+  ],
+  cursoGet
+);
 
 router.post(
   "/",
