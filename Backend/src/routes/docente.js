@@ -7,7 +7,8 @@ const {
   docentePut,
   docenteDelete,
 } = require("../controller/docente");
-const { ValidarCampos } = require("../middlewares");
+const { ValidarCampos, validarJWT } = require("../middlewares");
+const { existeDocenteById } = require("../helpers/db-validators");
 
 const router = Router();
 
@@ -39,6 +40,15 @@ router.post(
 );
 
 router.put("/:id", docentePut);
-router.delete("/", docenteDelete);
+router.delete(
+  "/:id",
+  [
+    validarJWT,
+    check("id", "No es un ID valido").isMongoId(),
+    check("id").custom(existeDocenteById),
+    ValidarCampos,
+  ],
+  docenteDelete
+);
 
 module.exports = router;

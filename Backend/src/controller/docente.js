@@ -50,9 +50,13 @@ const docentePut = (req = request, res = response) => {
   });
 };
 
-const docenteDelete = (req = request, res = response) => {
+const docenteDelete = async (req = request, res = response) => {
+  const { id } = req.params;
+
+  docente = await Docente.findByIdAndUpdate(id, { estado: false });
+
   res.json({
-    msg: "delete API - controlador",
+    docente,
   });
 };
 

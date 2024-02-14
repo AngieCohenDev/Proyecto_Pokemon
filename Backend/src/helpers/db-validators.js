@@ -1,5 +1,6 @@
 const Estudiante = require("../models/estudiante");
 const Curso  = require('../models/curso')
+const Docente = require('../models/docente')
 
 const ifExisteDID = async (documento_id) => {
   const existeID = await Estudiante.findOne({documento_id})
@@ -21,8 +22,16 @@ const existeCursoById = async(id) => {
   }
 }
 
+const existeDocenteById = async(id) => {
+  const existeDocente = await Docente.findById(id)
+  if(!existeDocente){
+    throw new Error(`El id: ${id} no esta asociado a ningun docente`)
+  }
+}
+
 module.exports = {
   ifExisteDID,
   existeEstudianteById,
-  existeCursoById
+  existeCursoById,
+  existeDocenteById
 };
