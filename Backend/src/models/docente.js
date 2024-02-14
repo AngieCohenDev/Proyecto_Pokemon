@@ -17,10 +17,12 @@ const DocenteSchema = Schema({
     type: String,
     require: [true, "La contraseña es requerida"],
   },
-  curso: {
-    type: Schema.Types.ObjectId,
-    ref: "Curso",
-  },
+  cursos: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Curso",
+    },
+  ],
   rol: {
     type: String,
     required: true,

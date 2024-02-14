@@ -57,7 +57,7 @@ const loginDocente = async (req, res = response) => {
         });
       }
 
-      // Verificar si el docente esta activo
+      // Verificar si el estudiante esta activo
       if (!estudiante.estado) {
         return res.status(400).json({
           msg: "EL estudiante no se encuentra activo",

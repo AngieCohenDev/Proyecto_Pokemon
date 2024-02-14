@@ -7,25 +7,31 @@ const docenteGet = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
   const query = { estado: true };
 
-  const [total, docentes] = await Promise.all([
-    Docente.countDocuments(query),
-    Docente.find(query).skip(Number(desde)).limit(Number(limite)),
-  ]);
+  try {
+    const [total, docentes] = await Promise.all([
+      Docente.countDocuments(query),
+      Docente.find(query).skip(Number(desde)).limit(Number(limite)),
+    ]);
 
-  res.json({
-    total,
-    docentes,
-  });
+    res.json({
+      total,
+      docentes,
+    });
+  } catch (error) {
+    res.status(404).json({
+      msg: 'No hay docentes en la base de datos'
+    })
+  }
 };
 
 const docentePost = async (req = request, res = response) => {
-  const { nombre, apellido, documento_id, password, curso, rol } = req.body;
+  const { nombre, apellido, documento_id, password, cursos, rol } = req.body;
   const docente = new Docente({
     nombre,
     apellido,
     documento_id,
     password,
-    curso,
+    cursos,
     rol,
   });
 
