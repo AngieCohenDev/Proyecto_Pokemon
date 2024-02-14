@@ -1,10 +1,11 @@
 const { Router } = require("express");
 const { check } = require("express-validator");
 const {
-  estudianteGet,
+  estudiantesGet,
   estudiantePost,
   estudiantePut,
   estudianteDelete,
+  estudianteGet,
 } = require("../controller/estudiante");
 const { ValidarCampos, validarJWT } = require("../middlewares");
 const {
@@ -14,7 +15,13 @@ const {
 
 const router = Router();
 
-router.get("/", estudianteGet);
+router.get("/", estudiantesGet);
+
+router.get("/:id",[
+  check('id', 'No es un id de Mongo valido').isMongoId(),
+  check('id').custom(existeEstudianteById),
+  ValidarCampos
+], estudianteGet);
 
 router.post(
   "/",

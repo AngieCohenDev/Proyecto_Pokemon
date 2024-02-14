@@ -3,7 +3,7 @@ const bcryptjs = require("bcryptjs");
 
 const Docente = require("../models/docente");
 
-const docenteGet = async (req = request, res = response) => {
+const docentesGet = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
   const query = { estado: true };
 
@@ -19,9 +19,16 @@ const docenteGet = async (req = request, res = response) => {
     });
   } catch (error) {
     res.status(404).json({
-      msg: 'No hay docentes en la base de datos'
-    })
+      msg: "No hay docentes en la base de datos",
+    });
   }
+};
+
+const docenteGet = async (req = request, res = response) => {
+  const { id } = req.params;
+  const docente = await Docente.findById(id).populate("cursos", "nombre");
+
+  res.json(docente);
 };
 
 const docentePost = async (req = request, res = response) => {
@@ -78,6 +85,7 @@ const docenteDelete = async (req = request, res = response) => {
 
 module.exports = {
   docenteGet,
+  docentesGet,
   docentePost,
   docentePut,
   docenteDelete,

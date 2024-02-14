@@ -3,7 +3,7 @@ const bcryptjs = require("bcryptjs");
 
 const Estudiante = require("../models/estudiante");
 
-const estudianteGet = async (req = request, res = response) => {
+const estudiantesGet = async (req = request, res = response) => {
   const { limite = 5, desde = 0 } = req.query;
   const query = { estado: true };
 
@@ -16,6 +16,13 @@ const estudianteGet = async (req = request, res = response) => {
     total,
     estudiantes,
   });
+};
+
+const estudianteGet = async (req = request, res = response) => {
+  const { id } = req.params;
+  const estudiante = await Estudiante.findById(id).populate("cursos", "nombre");
+
+  res.json(estudiante);
 };
 
 const estudiantePost = async (req = request, res = response) => {
@@ -76,6 +83,7 @@ const estudianteDelete = async (req = request, res = response) => {
 
 module.exports = {
   estudianteGet,
+  estudiantesGet,
   estudiantePost,
   estudiantePut,
   estudianteDelete,

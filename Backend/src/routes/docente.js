@@ -2,17 +2,28 @@ const { Router } = require("express");
 const { check } = require("express-validator");
 
 const {
-  docenteGet,
+  docentesGet,
   docentePost,
   docentePut,
   docenteDelete,
+  docenteGet,
 } = require("../controller/docente");
 const { ValidarCampos, validarJWT } = require("../middlewares");
 const { existeDocenteById } = require("../helpers/db-validators");
 
 const router = Router();
 
-router.get("/", docenteGet);
+router.get("/", docentesGet);
+
+router.get(
+  "/:id",
+  [
+    check("id", "No es un ID valido").isMongoId(),
+    check("id").custom(existeDocenteById),
+    ValidarCampos,
+  ],
+  docenteGet
+);
 
 router.post(
   "/",
@@ -44,7 +55,7 @@ router.put(
   [
     validarJWT,
     check("id", "No es un ID valido").isMongoId(),
-    check("id").custom(existeDocenteById), 
+    check("id").custom(existeDocenteById),
     ValidarCampos,
   ],
   docentePut
