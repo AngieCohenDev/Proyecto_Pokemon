@@ -3,6 +3,7 @@ const Docente = require('../models/docente');
 
 const generarJWT = (iud = "") => {
   return new Promise((resolve, reject) => {
+    //TODO: investigar jwt
     const payload = { iud };
 
     jwt.sign(

@@ -20,7 +20,7 @@ const buscarEstudiante = async (termino = "", res = response) => {
     $or: [{ nombre: regex }, { apellido: regex }],
     $and: [{ estado: true }],
   });
-
+       //TODO : Cambiaria ESTOS RES POR RETURNS
   res.json({
     results: estudiantes,
   });
@@ -70,7 +70,8 @@ const buscarCursos = async (termino = "", res = response) => {
   });
 };
 
-const buscar = (req, res = response) => {
+const buscar = (req, res ) => {
+  
   const { coleccion, termino } = req.params;
 
   if (!coleccionesPermitidas.includes(coleccion)) {
