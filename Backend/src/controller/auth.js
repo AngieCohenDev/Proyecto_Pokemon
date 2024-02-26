@@ -72,10 +72,7 @@ const loginEstudiante = async (req, res) => {
       token,
     });
   } catch (error) {
-    res.status(500).json({
-      msg: "Comuniquese con el administrador",
-      error,
-    });
+    res.status(400).send(error.message);
   }
 };
 
