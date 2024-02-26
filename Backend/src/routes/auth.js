@@ -15,7 +15,6 @@ router.post("/login", [
     .not()
     .isEmpty()
     .isLength({ min: 6 }),
-
   ValidarCampos,
 ], loginDocente);
 router.post("/loginEstudiante", [

@@ -21,7 +21,7 @@ const buscarEstudiante = async (termino = "", res = response) => {
     $and: [{ estado: true }],
   });
 
-  res.json({
+  return res.json({
     results: estudiantes,
   });
 };
@@ -43,7 +43,7 @@ const buscarDocente = async (termino = "", res = response) => {
     $and: [{ estado: true }],
   });
 
-  res.json({
+  return res.json({
     results: docentes,
   });
 };
@@ -65,7 +65,7 @@ const buscarCursos = async (termino = "", res = response) => {
     estado: true,
   }).populate("docente", "nombre");
 
-  res.json({
+  return res.json({
     results: cursos,
   });
 };
